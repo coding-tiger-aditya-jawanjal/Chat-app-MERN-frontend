@@ -3,7 +3,7 @@ import axios from "axios";
 const key = localStorage.getItem("chatUser");
 const token = JSON.parse(key);
 
-export const BACKEND_URL = `http://localhost:5000`;
+export const BACKEND_URL = `https://chat-app-mern-backend.onrender.com`;
 // export const BACKEND_URL = `https://chat-app-mern-backend.onrender.com`;
 const Api = axios.create({
   baseURL: `${BACKEND_URL}/api`,
