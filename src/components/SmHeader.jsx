@@ -14,7 +14,7 @@ import MyChatDrawer from "../chakraComponents/MyChatDrawer";
 import { handleLogout } from "../services/functions";
 
 const SmHeader = () => {
-  const { setOpenProfile, setOpenSearch, setOpenMyChatDrawer, auth , setSelectedPerson } =
+  const { setOpenProfile, setOpenSearch, setOpenMyChatDrawer, auth , setOpenAddGroup , setSelectedPerson } =
     useAccount();
 
   return (
@@ -52,6 +52,7 @@ const SmHeader = () => {
             >
               Profile
             </MenuItem>
+            <MenuItem onClick={()=>{setOpenAddGroup(true);}}>Create Group</MenuItem>
             <MenuItem
               onClick={() => {
                 setOpenSearch(true);

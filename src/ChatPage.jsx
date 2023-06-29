@@ -7,7 +7,7 @@ import { getAllMyChats, getAllUsers } from "./services/api";
 import { useAccount } from "./context/AppContext";
 
 const chatPage = () => {
-  const { setAllUsers , setAllMyChats, currentChat , auth} = useAccount();
+  const { setAllUsers , setAllMyChats, allUsers , currentChat , auth} = useAccount();
 
   const handleGetAllUsers = async () => {
     try {
@@ -27,6 +27,7 @@ const chatPage = () => {
       if (!res.chats) {
         console.log(res.msg);
       }
+      console.log(res.chats);
       setAllMyChats(res.chats);
     } catch (err) {
       console.log(err);
@@ -35,11 +36,18 @@ const chatPage = () => {
 
   useEffect(() => {
     handleGetAllUsers();
-  }, []);
+    handleGetAllMyChats();
+  }, [auth]);
 
   useEffect(() => {
+    handleGetAllUsers();
     handleGetAllMyChats();
-  }, [currentChat]);
+  },[currentChat]);
+
+  useEffect(() => {
+    handleGetAllUsers();
+    handleGetAllMyChats();
+  },[]);
 
   return (
     <>

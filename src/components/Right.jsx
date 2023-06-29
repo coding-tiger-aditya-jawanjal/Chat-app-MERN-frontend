@@ -65,8 +65,11 @@ const Right = () => {
 
   const handleGetSingleChat = async () => {
     try {
-      const res = await getSingleChat(currentChat._id);
-      setMessages(res.chat.messages);
+        const res = await getSingleChat(currentChat._id);
+        console.log(res.chats[0].messages);
+        if(res?.chats[0].messages){
+          setMessages(res.chats[0].messages);
+        }
     } catch (err) {
       console.log(err);
     }
@@ -81,8 +84,8 @@ const Right = () => {
       const res = await sendMessage(data);
       if(res){
         socket.emit("msg", { msg: res, room: currentChat._id });
+        await handleGetSingleChat();
       }
-      await handleGetSingleChat();
     } catch (err) {
       console.log(err);
     }
@@ -93,7 +96,7 @@ const Right = () => {
      const my = [...messages , msg];
       setMessages(my);
     });
-  })
+  },[socket])
 
   const handleSendMediaMessage = async (e) => {
     try {
@@ -140,7 +143,7 @@ const Right = () => {
               currentChat
                 ? currentChat.isGroupChat
                   ? currentChat.groupIcon
-                  : currentChat.users.filter((e) => e._id !== auth._id)[0].pic
+                  : currentChat.users?.filter((e) => e._id !== auth._id)[0].pic
                 : ""
             }
             alt="My-Profile-DP"
@@ -157,7 +160,7 @@ const Right = () => {
               {currentChat
                 ? currentChat.isGroupChat
                   ? currentChat.chatName
-                  : currentChat.users.filter((e) => e._id !== auth._id)[0].name
+                  : currentChat.users?.filter((e) => e._id !== auth._id)[0].name
                 : ""}
             </Text>
           </Grid>
@@ -199,12 +202,12 @@ const Right = () => {
                   auth
                     ? e
                       ? e.senderId
-                        ? auth._id === e.senderId._id
-                          ? "end"
-                          : "flex-start"
-                        : "flex-start"
-                      : "flex-start"
-                    : "flex-start"
+                        ? e.senderId._id !==  auth._id
+                          ? "flex-start"
+                          : "end"
+                        : ""
+                      : ""
+                    : ""
                 }
                 color={"linkedin.100"}
                 fontSize={"1.1rem"}
@@ -220,6 +223,7 @@ const Right = () => {
                           top={"-5"}
                           fontSize={"xs"}
                           mb={"10"}
+                          color={'whitesmoke'}
                         >
                           {e.senderId
                             ? e.senderId.name

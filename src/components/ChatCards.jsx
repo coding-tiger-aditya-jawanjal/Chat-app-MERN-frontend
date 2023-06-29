@@ -54,7 +54,7 @@ export const SearchChatCards = (data) => {
           <Text fontWeight={"bold"} fontSize={"md"}>
             {data ? data.user.name : ""}
           </Text>
-          <Text fontSize={"sm"}>Katrina kaif</Text>
+          <Text fontSize={"sm"}>{data ? data.user?.email : ""}</Text>
         </Grid>
       </HStack>
     </>

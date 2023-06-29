@@ -58,7 +58,7 @@ const PersonModal = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Profile :- </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton  />
           <ModalBody>
             <Stack gap={5} alignItems={"center"}>
               <Image
@@ -100,6 +100,7 @@ const PersonModal = () => {
               mr={3}
               onClick={() => {
                 onClose();
+                setSelectedperson();
                 selectedPerson ? "" : setSelectedperson({});
               }}
               size={{ base: "xs", sm: "sm", mid: "lg" }}
