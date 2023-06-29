@@ -96,7 +96,7 @@ const Right = () => {
      const my = [...messages , msg];
       setMessages(my);
     });
-  },[socket])
+  })
 
   const handleSendMediaMessage = async (e) => {
     try {
@@ -106,8 +106,8 @@ const Right = () => {
       const res = await sendMediaMessage(data);
       if(res){
         socket.emit("msg", { msg: res, room: currentChat._id });
+        await handleGetSingleChat();
       }
-      await handleGetSingleChat();
     } catch (err) {
       console.log(err);
     }
@@ -205,9 +205,9 @@ const Right = () => {
                         ? e.senderId._id !==  auth._id
                           ? "flex-start"
                           : "end"
-                        : ""
-                      : ""
-                    : ""
+                        : "end"
+                      : "end"
+                    : "end"
                 }
                 color={"linkedin.100"}
                 fontSize={"1.1rem"}
