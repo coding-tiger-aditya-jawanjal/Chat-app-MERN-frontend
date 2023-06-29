@@ -91,7 +91,8 @@ const Right = () => {
 
   useEffect(()=>{
     socket.on("new_msg", ({msg}) => {
-      newArr = [...messages , msg];
+      newArr = [...messages];
+      newArr.push(msg);
       setMessages(newArr);
     });
   },[])
