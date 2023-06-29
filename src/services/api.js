@@ -3,7 +3,8 @@ import axios from "axios";
 const key = localStorage.getItem("chatUser");
 const token = JSON.parse(key);
 
-export const BACKEND_URL = `https://chat-app-mern-backend.onrender.com`;
+export const BACKEND_URL = `http://localhost:5000`;
+// export const BACKEND_URL = `https://chat-app-mern-backend.onrender.com`;
 const Api = axios.create({
   baseURL: `${BACKEND_URL}/api`,
   headers: {
@@ -20,7 +21,7 @@ export const signup = async (data) => {
   }
 };
 
-export const login = async (data) => {
+export const loginapi = async (data) => {
   try {
     const res = await Api.post(`/users/login`, data);
     return res.data;

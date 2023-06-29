@@ -8,8 +8,9 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { handleLogin, handleSignUp } from "./services/functions";
+// import { handleLogin, handleSignUp } from "./services/functions";
 import { useAccount } from "./context/AppContext";
+import { loginapi, signup } from "./services/api";
 
 const SignUp = () => {
   const [login, setLogin] = useState(false);
@@ -19,6 +20,58 @@ const SignUp = () => {
   const [pic, setPic] = useState();
 
   const { setLoading, loading } = useAccount();
+
+  const handleSignUp = async (e) => {
+    let data;
+    try {
+      if (e.pic) {
+        data = new FormData();
+        data.append("name", e.name);
+        data.append("email", e.email);
+        data.append("password", e.password);
+        data.append("pic", e.pic);
+      } else {
+        data = {
+          name: e.name,
+          email: e.email,
+          password: e.password,
+        };
+      }
+      const res = await signup(data);
+      if (!res.token) {
+        setLoading(false);
+        alert(res.msg);
+      }
+      if(res.token){
+        setLoading(false);
+      localStorage.setItem("chatUser", JSON.stringify(res.token.token));
+      alert(res.msg);
+      window.location.reload();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleLogin = async (e) => {
+    try {
+      const data = {
+        email: e.email,
+        password: e.password,
+      };
+      const res = await loginapi(data);
+      if (!res.token) {
+        setLoading(false);
+        alert(res.msg);
+      }
+      setLoading(false);
+      localStorage.setItem("chatUser", JSON.stringify(res.token.token));
+      alert(res.msg);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
